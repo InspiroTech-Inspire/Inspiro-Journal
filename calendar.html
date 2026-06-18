@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Economic Calendar — MARK.</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.calendar-tabs{ display:flex; gap:8px; margin-bottom:16px; }
+.calendar-tab{ padding:8px 16px; border-radius:var(--radius-sm); border:1px solid var(--border); background:var(--surface); color:var(--text-muted); cursor:pointer; font-size:13px; }
+.calendar-tab.active{ background:var(--blue-dim); border-color:var(--blue); color:var(--blue); }
+.calendar-source{ font-size:12px; color:var(--text-faint); margin-bottom:12px; }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Economic Calendar</h1>
+        <div class="sub">High-impact events that move the markets you trade.</div>
+      </div>
+    </div>
+
+    <div class="calendar-tabs">
+      <button class="calendar-tab active" data-source="forexfactory">ForexFactory</button>
+      <button class="calendar-tab" data-source="tradingeconomics">TradingEconomics</button>
+      <button class="calendar-tab" data-source="investing">Investing.com</button>
+    </div>
+    <div class="calendar-source" id="calendar-source-text">Source: ForexFactory.com</div>
+
+    <div class="calendar-embed" id="calendar-embed">
+      <iframe id="calendar-iframe" src="https://www.forexfactory.com/calendar?day=today" loading="lazy"></iframe>
+    </div>
+  </main>
+</div>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+
+<script src="js/db.js"></script>
+<script src="js/nav.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  renderSidebar('calendar'); // This won't be active, but sidebar renders
+
+  const tabs = document.querySelectorAll('.calendar-tab');
+  const iframe = document.getElementById('calendar-iframe');
+  const sourceText = document.getElementById('calendar-source-text');
+
+  const sources = {
+    forexfactory: { url: 'https://www.forexfactory.com/calendar?day=today', label: 'ForexFactory.com' },
+    tradingeconomics: { url: 'https://tradingeconomics.com/calendar', label: 'TradingEconomics.com' },
+    investing: { url: 'https://www.investing.com/economic-calendar/', label: 'Investing.com' },
+  };
+
+  tabs.forEach(tab => {
+    tab.addEventListener('click', () => {
+      tabs.forEach(t => t.classList.remove('active'));
+      tab.classList.add('active');
+      const key = tab.getAttribute('data-source');
+      const src = sources[key];
+      if(src){
+        iframe.src = src.url;
+        sourceText.textContent = 'Source: ' + src.label;
+      }
+    });
+  });
+});
+</script>
+</body>
+</html>

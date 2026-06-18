@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Prop Firms — MARK.</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Prop Firms</h1>
+        <div class="sub">Set each account's rules and watch your drawdown and phase targets in real time.</div>
+      </div>
+      <div class="page-head-actions">
+        <button class="btn btn-primary" id="btn-add-account">+ New account</button>
+      </div>
+    </div>
+
+    <div class="grid-cards" id="account-grid"></div>
+  </main>
+</div>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+
+<script src="js/db.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/propfirms.js"></script>
+</body>
+</html>

@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Public Stats — MARK.</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+.public-wrap{ max-width:600px; margin:0 auto; padding:40px 20px; }
+.public-header{ text-align:center; margin-bottom:40px; }
+.public-header .brand-mark{ width:50px; height:50px; font-size:24px; margin:0 auto 16px; }
+.public-header h1{ font-size:28px; margin-bottom:8px; }
+.public-header .sub{ color:var(--text-muted); font-size:14px; }
+.public-stat-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:16px; margin-bottom:30px; }
+.public-stat{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:20px; text-align:center; }
+.public-stat .label{ font-size:11px; color:var(--text-faint); text-transform:uppercase; letter-spacing:.05em; margin-bottom:8px; }
+.public-stat .value{ font-family:var(--font-mono); font-size:28px; font-weight:600; }
+.public-chart{ background:var(--surface); border:1px solid var(--border); border-radius:var(--radius-lg); padding:20px; margin-bottom:20px; }
+.public-footer{ text-align:center; color:var(--text-faint); font-size:12px; margin-top:40px; }
+.public-footer a{ color:var(--blue); }
+</style>
+</head>
+<body>
+<div class="public-wrap">
+  <div class="public-header">
+    <div class="brand-mark">M</div>
+    <h1>Trading Performance</h1>
+    <div class="sub" id="public-sub">Verified trade journal</div>
+  </div>
+
+  <div class="public-stat-grid" id="public-stats"></div>
+
+  <div class="public-chart">
+    <div class="card-title" style="margin-bottom:12px;">Equity Curve</div>
+    <canvas id="public-equity-chart" style="max-height:200px;"></canvas>
+  </div>
+
+  <div class="public-footer">
+    <p>Powered by <a href="https://github.com" target="_blank">MARK. Trading Journal</a></p>
+    <p style="margin-top:4px; font-size:11px;">Data refreshed: <span id="public-updated">—</span></p>
+  </div>
+</div>
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="js/db.js"></script>
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  initTheme();
+  const trades = Trades.all();
+  if(!trades.length){
+    document.getElementById('public-stats').innerHTML = '<div class="public-stat" style="grid-column:1/-1;"><div class="value" style="font-size:16px;">No trades to display</div></div>';
+    return;
+  }
+
+  const pnl = netPnl(trades);
+  const wr = winRate(trades);
+  const pf = profitFactor(trades);
+  const total = trades.length;
+
+  document.getElementById('public-stats').innerHTML = `
+    <div class="public-stat"><div class="label">Net P&L</div><div class="value ${pnl>=0?'text-bull':'text-bear'}">${moneySigned(pnl)}</div></div>
+    <div class="public-stat"><div class="label">Win Rate</div><div class="value">${pct(wr,0)}</div></div>
+    <div class="public-stat"><div class="label">Profit Factor</div><div class="value">${pf===Infinity?'∞':pf.toFixed(2)}</div></div>
+    <div class="public-stat"><div class="label">Total Trades</div><div class="value">${total}</div></div>
+  `;
+
+  const curve = equityCurve(trades, 0);
+  const ctx = document.getElementById('public-equity-chart');
+  new Chart(ctx, {
+    type:'line',
+    data:{
+      labels: curve.map((c,i) => i+1),
+      datasets:[{
+        data: curve.map(c => c.balance),
+        borderColor:'#5B8DEF', backgroundColor:'rgba(91,141,239,.12)',
+        fill:true, tension:.25, pointRadius:0, borderWidth:2,
+      }]
+    },
+    options:{
+      responsive:true, maintainAspectRatio:true,
+      plugins:{ legend:{ display:false } },
+      scales:{
+        x:{ display:false },
+        y:{ ticks:{ callback: v => moneySigned(v) } },
+      }
+    }
+  });
+
+  document.getElementById('public-updated').textContent = new Date().toLocaleString();
+});
+</script>
+</body>
+</html>

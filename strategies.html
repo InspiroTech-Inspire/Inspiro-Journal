@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Strategies — MARK.</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Strategies</h1>
+        <div class="sub">Define the rules each setup must meet — trades are graded against this checklist automatically.</div>
+      </div>
+      <div class="page-head-actions">
+        <button class="btn btn-primary" id="btn-add-strategy">+ New strategy</button>
+      </div>
+    </div>
+
+    <div class="card" style="margin-bottom:22px;">
+      <div class="card-title">Display settings</div>
+      <div class="card-sub" style="margin-bottom:14px;">Used to format P&amp;L figures in the journal and analytics (per-account currency is set on the Prop Firms page).</div>
+      <div class="field-row cols-3">
+        <div class="field"><label>Base currency</label><input type="text" id="base-currency" class="mono" maxlength="6"></div>
+      </div>
+      <button class="btn btn-bull btn-sm" id="btn-save-currency">Save currency</button>
+    </div>
+
+    <div class="card" style="margin-bottom:22px;">
+      <div class="card-title">Grading scale</div>
+      <div class="card-sub" style="margin-bottom:14px;">Applies to every strategy. A trade's score is the % of checklist rules it satisfied.</div>
+      <div class="field-row cols-3">
+        <div class="field"><label>A setup — score ≥</label><input type="number" id="th-a" min="0" max="100" class="mono"></div>
+        <div class="field"><label>B setup — score ≥</label><input type="number" id="th-b" min="0" max="100" class="mono"></div>
+        <div class="field"><label>C setup — score ≥</label><input type="number" id="th-c" min="0" max="100" class="mono"></div>
+      </div>
+      <div class="hint" style="margin-bottom:12px;">Anything below the C threshold is graded D — consider skipping the trade.</div>
+      <button class="btn btn-bull btn-sm" id="btn-save-thresholds">Save grading scale</button>
+    </div>
+
+    <div class="grid-cards" id="strategy-grid"></div>
+  </main>
+</div>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+
+<script src="js/db.js"></script>
+<script src="js/nav.js"></script>
+<script src="js/strategies.js"></script>
+</body>
+</html>

@@ -1,0 +1,77 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Analytics — MARK.</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="main">
+    <div class="page-head">
+      <div>
+        <h1>Analytics</h1>
+        <div class="sub">Visual breakdown of your edge — by grade, strategy, symbol and time.</div>
+      </div>
+    </div>
+
+    <div class="filter-bar">
+      <input type="date" id="f-from" title="From date">
+      <span class="text-faint">to</span>
+      <input type="date" id="f-to" title="To date">
+      <select id="f-strategy"><option value="">All strategies</option></select>
+      <select id="f-account"><option value="">All accounts</option></select>
+      <select id="f-symbol"><option value="">All symbols</option></select>
+      <button class="btn btn-ghost btn-sm" id="btn-clear-filters">Clear filters</button>
+    </div>
+
+    <div class="kpi-grid" id="kpi-grid"></div>
+
+    <div class="charts-grid">
+      <div class="chart-card span-2">
+        <div class="card-title">Equity curve</div>
+        <div class="card-sub" style="margin-bottom:10px;">Cumulative P&amp;L across the filtered trades</div>
+        <canvas id="chart-equity"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <div class="card-title">Win / loss / breakeven</div>
+        <canvas id="chart-outcomes"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="card-title">Win rate by setup grade</div>
+        <div class="card-sub" style="margin-bottom:10px;">Validates whether your grading actually predicts results</div>
+        <canvas id="chart-grade"></canvas>
+      </div>
+
+      <div class="chart-card">
+        <div class="card-title">P&amp;L by strategy</div>
+        <canvas id="chart-strategy"></canvas>
+      </div>
+      <div class="chart-card">
+        <div class="card-title">P&amp;L by symbol</div>
+        <canvas id="chart-symbol"></canvas>
+      </div>
+
+      <div class="chart-card span-2">
+        <div class="card-title">Monthly P&amp;L</div>
+        <canvas id="chart-monthly"></canvas>
+      </div>
+    </div>
+  </main>
+</div>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+
+<script src="js/db.js"></script>
+<script src="js/nav.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chart.js@4.4.4/dist/chart.umd.min.js"></script>
+<script src="js/analytics.js"></script>
+</body>
+</html>
