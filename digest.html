@@ -1,0 +1,428 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>Weekly Digest — MARK.</title>
+<link rel="icon" href="data:,">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<style>
+  /* ── Layout ── */
+  .digest-wrap{
+    max-width: 520px; margin: 0 auto; padding: 32px 24px 80px;
+    display: flex; flex-direction: column; gap: 20px;
+  }
+
+  /* ── Hero ── */
+  .digest-hero{
+    text-align: center; padding: 28px 24px 22px;
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    position: relative;
+  }
+  .digest-logo{
+    width: 48px; height: 48px; border-radius: 13px;
+    background: linear-gradient(135deg, var(--gold), var(--bull));
+    display: flex; align-items: center; justify-content: center;
+    font-family: var(--font-display); font-weight: 700; color: #0A0E13; font-size: 20px;
+    margin: 0 auto 12px;
+  }
+  .digest-hero h1{ font-size: 20px; margin-bottom: 4px; }
+  .digest-hero p{ color: var(--text-muted); font-size: 13px; line-height: 1.6; }
+
+  /* gear icon in top-right of hero */
+  .gear-btn{
+    position: absolute; top: 14px; right: 14px;
+    background: none; border: none; cursor: pointer;
+    color: var(--text-faint); padding: 6px; border-radius: var(--radius-sm);
+    transition: color .12s, background .12s;
+    line-height: 0;
+  }
+  .gear-btn:hover{ color: var(--text-muted); background: var(--surface-2); }
+  .gear-btn svg{ width: 16px; height: 16px; }
+
+  /* ── 3-stat preview grid ── */
+  .preview-grid{
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 10px; margin: 18px 0 0;
+  }
+  .preview-stat{
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 11px 8px; text-align: center;
+  }
+  .preview-stat .lbl{
+    font-size: 10px; color: var(--text-faint); text-transform: uppercase;
+    letter-spacing: .05em; margin-bottom: 4px;
+  }
+  .preview-stat .val{ font-family: var(--font-mono); font-size: 17px; font-weight: 600; }
+
+  /* ── Send card ── */
+  .send-card{
+    background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
+    padding: 22px 22px 20px;
+  }
+  .send-card h3{ font-size: 15px; margin-bottom: 14px; }
+
+  .week-range-pick{ display: flex; gap: 8px; align-items: center; }
+  .week-range-pick input{ width: auto; flex: 1; }
+  .week-range-pick span{ color: var(--text-faint); font-size: 12px; flex-shrink: 0; }
+
+  /* ── Detailed stats preview table ── */
+  .stats-preview-live{
+    background: var(--bg-soft); border: 1px solid var(--border); border-radius: var(--radius);
+    padding: 12px 14px; font-size: 13px; margin-top: 14px;
+  }
+  .sp-row{
+    display: flex; justify-content: space-between; padding: 5px 0;
+    border-bottom: 1px solid var(--border);
+  }
+  .sp-row:last-child{ border-bottom: none; }
+  .sp-label{ color: var(--text-muted); }
+  .sp-val{ font-family: var(--font-mono); font-weight: 600; }
+
+  /* ── Success banner ── */
+  .success-banner{
+    background: var(--bull-dim); border: 1px solid var(--bull); border-radius: var(--radius);
+    padding: 14px; text-align: center; color: var(--bull); font-weight: 600;
+    display: none; margin-top: 14px;
+  }
+
+  /* ── No-webhook warning ── */
+  .no-webhook-warn{
+    background: var(--gold-dim); border: 1px solid var(--gold); border-radius: var(--radius);
+    padding: 12px 14px; font-size: 12.5px; color: var(--text-muted);
+    display: none; margin-top: 10px;
+  }
+
+  /* ── Gear modal overrides ── */
+  .url-status{ font-size: 11.5px; margin-top: 6px; }
+  .url-status.ok{ color: var(--bull); }
+  .url-status.warn{ color: var(--gold); }
+</style>
+</head>
+<body>
+<div class="app">
+  <aside class="sidebar" id="sidebar"></aside>
+
+  <main class="main">
+    <div class="digest-wrap">
+
+      <!-- Hero with gear icon -->
+      <div class="digest-hero">
+        <button class="gear-btn" id="btn-gear" title="Configure webhook URL">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.7">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
+          </svg>
+        </button>
+        <div class="digest-logo">M</div>
+        <h1>Weekly Trading Digest</h1>
+        <p>Send a summary of your week's trading straight to your inbox.</p>
+        <div class="preview-grid">
+          <div class="preview-stat">
+            <div class="lbl">Trades</div>
+            <div class="val" id="ps-count">—</div>
+          </div>
+          <div class="preview-stat">
+            <div class="lbl">Net P&amp;L</div>
+            <div class="val" id="ps-pnl">—</div>
+          </div>
+          <div class="preview-stat">
+            <div class="lbl">Win rate</div>
+            <div class="val" id="ps-wr">—</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Send card -->
+      <div class="send-card">
+        <h3>Send this week's digest</h3>
+
+        <div class="field">
+          <label>Your email address</label>
+          <input type="email" id="digest-email" placeholder="you@example.com">
+        </div>
+
+        <div class="field">
+          <label>Date range</label>
+          <div class="week-range-pick">
+            <input type="date" id="week-from">
+            <span>to</span>
+            <input type="date" id="week-to">
+            <button class="btn btn-ghost btn-sm" id="btn-this-week">This week</button>
+          </div>
+        </div>
+
+        <!-- Live stats table -->
+        <div class="stats-preview-live">
+          <div class="sp-row"><span class="sp-label">Total trades</span><span class="sp-val" id="prev-trades">—</span></div>
+          <div class="sp-row"><span class="sp-label">Net P&amp;L</span><span class="sp-val" id="prev-pnl">—</span></div>
+          <div class="sp-row"><span class="sp-label">Win rate</span><span class="sp-val" id="prev-wr">—</span></div>
+          <div class="sp-row"><span class="sp-label">Wins / Losses / B/E</span><span class="sp-val" id="prev-wlb">—</span></div>
+          <div class="sp-row"><span class="sp-label">Profit factor</span><span class="sp-val" id="prev-pf">—</span></div>
+          <div class="sp-row"><span class="sp-label">Best trade</span><span class="sp-val" id="prev-best">—</span></div>
+          <div class="sp-row"><span class="sp-label">Worst trade</span><span class="sp-val" id="prev-worst">—</span></div>
+        </div>
+
+        <div class="no-webhook-warn" id="no-webhook-warn">
+          ⚙ No webhook URL configured yet. Click the gear icon at the top-right to add your Make.com URL.
+        </div>
+
+        <div class="success-banner" id="success-banner">
+          ✅ Digest sent! Check your inbox (and spam folder just in case).
+        </div>
+
+        <div style="display:flex; gap:10px; margin-top:16px; align-items:center;">
+          <button class="btn btn-primary" id="btn-send-digest" style="flex:1;">
+            Send digest to my inbox
+          </button>
+          <button class="btn btn-ghost btn-sm" id="btn-copy-payload" title="Copy JSON payload">
+            Copy JSON
+          </button>
+        </div>
+      </div>
+
+    </div>
+  </main>
+</div>
+
+<div id="toast-wrap" class="toast-wrap"></div>
+
+<script src="js/db.js"></script>
+<script src="js/nav.js"></script>
+<script>
+/* ================================================================
+   MARK. — Weekly Digest
+   ================================================================
+
+   ★ SETUP: Paste your Make.com webhook URL on the line below.
+   Leave the quotes in place. Example:
+     const WEBHOOK_URL = 'https://hook.make.com/abc123def456';
+
+   To change it later you can also click the ⚙ gear icon on the page.
+   The gear icon always takes priority over this hardcoded value if a
+   URL has been saved there.
+   ================================================================ */
+const WEBHOOK_URL = '';   // ← PASTE YOUR MAKE.COM URL HERE
+
+/* ================================================================
+   No need to edit anything below this line.
+   ================================================================ */
+
+document.addEventListener('DOMContentLoaded', () => {
+  renderSidebar('digest');
+
+  // Resolve the active webhook: localStorage (set via gear) overrides the
+  // hardcoded constant, so the page works both ways.
+  function getWebhookUrl(){
+    return localStorage.getItem('mark_digest_webhook') || WEBHOOK_URL || '';
+  }
+
+  // Show/hide no-webhook warning
+  function checkWebhookWarning(){
+    document.getElementById('no-webhook-warn').style.display =
+      getWebhookUrl() ? 'none' : 'block';
+  }
+  checkWebhookWarning();
+
+  // ── Date range helpers ────────────────────────────────────────
+  function getWeekBounds(){
+    const now = new Date();
+    const dow = now.getDay();
+    const mon = new Date(now);
+    mon.setDate(now.getDate() - (dow === 0 ? 6 : dow - 1));
+    const sun = new Date(mon);
+    sun.setDate(mon.getDate() + 6);
+    const fmt = d =>
+      d.getFullYear() + '-' +
+      String(d.getMonth() + 1).padStart(2,'0') + '-' +
+      String(d.getDate()).padStart(2,'0');
+    return { from: fmt(mon), to: fmt(sun) };
+  }
+
+  const wb = getWeekBounds();
+  document.getElementById('week-from').value = wb.from;
+  document.getElementById('week-to').value   = wb.to;
+
+  document.getElementById('btn-this-week').addEventListener('click', () => {
+    const b = getWeekBounds();
+    document.getElementById('week-from').value = b.from;
+    document.getElementById('week-to').value   = b.to;
+    refreshPreview();
+  });
+
+  document.getElementById('week-from').addEventListener('change', refreshPreview);
+  document.getElementById('week-to').addEventListener('change', refreshPreview);
+
+  // ── Build payload ─────────────────────────────────────────────
+  function buildPayload(){
+    const from = document.getElementById('week-from').value;
+    const to   = document.getElementById('week-to').value;
+    if(!from || !to) return null;
+
+    const trades = filterTrades(Trades.all(), { from, to });
+    const sorted = sortByDate(trades);
+    const best  = sorted.reduce((a,t) => (t.pnl > (a?.pnl ?? -Infinity) ? t : a), null);
+    const worst = sorted.reduce((a,t) => (t.pnl < (a?.pnl ?? Infinity)  ? t : a), null);
+    const pf    = profitFactor(trades);
+
+    return {
+      email:        document.getElementById('digest-email').value.trim(),
+      weekStart:    from,
+      weekEnd:      to,
+      totalTrades:  trades.length,
+      netPnl:       parseFloat(netPnl(trades).toFixed(2)),
+      winRate:      parseFloat(winRate(trades).toFixed(2)),
+      wins:         wins(trades).length,
+      losses:       losses(trades).length,
+      breakevens:   breakevens(trades).length,
+      profitFactor: pf === Infinity ? 999 : parseFloat(pf.toFixed(2)),
+      bestTrade:  best  ? { symbol: best.symbol  || '—', pnl: parseFloat((Number(best.pnl)||0).toFixed(2))  } : { symbol:'—', pnl:0 },
+      worstTrade: worst ? { symbol: worst.symbol || '—', pnl: parseFloat((Number(worst.pnl)||0).toFixed(2)) } : { symbol:'—', pnl:0 },
+    };
+  }
+
+  // ── Stats preview ─────────────────────────────────────────────
+  function refreshPreview(){
+    const p = buildPayload();
+    if(!p) return;
+
+    // Hero mini stats
+    document.getElementById('ps-count').textContent = p.totalTrades;
+    const pnlEl = document.getElementById('ps-pnl');
+    pnlEl.textContent = (p.netPnl >= 0 ? '+' : '') + '$' + Math.abs(p.netPnl).toFixed(2);
+    pnlEl.style.color = p.netPnl >= 0 ? 'var(--bull)' : 'var(--bear)';
+    document.getElementById('ps-wr').textContent = p.winRate.toFixed(0) + '%';
+
+    // Detailed table
+    const prevPnl = document.getElementById('prev-pnl');
+    document.getElementById('prev-trades').textContent  = p.totalTrades;
+    prevPnl.textContent = (p.netPnl >= 0 ? '+' : '') + '$' + Math.abs(p.netPnl).toFixed(2);
+    prevPnl.style.color = p.netPnl >= 0 ? 'var(--bull)' : 'var(--bear)';
+    document.getElementById('prev-wr').textContent      = p.winRate.toFixed(0) + '%';
+    document.getElementById('prev-wlb').textContent     = p.wins + ' / ' + p.losses + ' / ' + p.breakevens;
+    document.getElementById('prev-pf').textContent      = p.profitFactor === 999 ? '∞' : p.profitFactor;
+    document.getElementById('prev-best').textContent    = p.bestTrade.symbol  + '  +$' + p.bestTrade.pnl.toFixed(2);
+    document.getElementById('prev-worst').textContent   = p.worstTrade.symbol + '  $'  + p.worstTrade.pnl.toFixed(2);
+  }
+  refreshPreview();
+
+  // ── Copy JSON ─────────────────────────────────────────────────
+  document.getElementById('btn-copy-payload').addEventListener('click', () => {
+    const p = buildPayload();
+    if(!p){ toast('Set a date range first.', 'err'); return; }
+    navigator.clipboard.writeText(JSON.stringify(p, null, 2))
+      .then(() => toast('JSON payload copied to clipboard.', 'ok'));
+  });
+
+  // ── Send digest ───────────────────────────────────────────────
+  document.getElementById('btn-send-digest').addEventListener('click', async () => {
+    const webhookUrl = getWebhookUrl();
+    if(!webhookUrl){
+      toast('No webhook URL set. Click the ⚙ gear icon to add your Make.com URL.', 'err');
+      return;
+    }
+    const email = document.getElementById('digest-email').value.trim();
+    if(!email || !email.includes('@')){
+      toast('Enter a valid email address.', 'err'); return;
+    }
+    const payload = buildPayload();
+    if(!payload){ toast('Set a date range first.', 'err'); return; }
+    payload.email = email;
+
+    const btn = document.getElementById('btn-send-digest');
+    btn.disabled = true; btn.textContent = 'Sending…';
+
+    try {
+      await fetch(webhookUrl, {
+        method: 'POST',
+        headers: { 'Content-Type': 'application/json' },
+        body: JSON.stringify(payload),
+        mode: 'no-cors',
+      });
+      document.getElementById('success-banner').style.display = 'block';
+      toast('Digest sent to Make.com!', 'ok');
+    } catch(err) {
+      toast('Could not reach your webhook — check the URL and your internet.', 'err');
+    } finally {
+      btn.disabled = false; btn.textContent = 'Send digest to my inbox';
+    }
+  });
+
+  // ── Gear icon → webhook settings modal ───────────────────────
+  document.getElementById('btn-gear').addEventListener('click', () => {
+    const current = getWebhookUrl();
+    const isHardcoded = !!WEBHOOK_URL && !localStorage.getItem('mark_digest_webhook');
+
+    const html = `
+      <div class="modal-header">
+        <h3>Webhook settings</h3>
+        <button class="modal-close" id="gm-x">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" width="18" height="18"><path d="M6 6l12 12M18 6L6 18"/></svg>
+        </button>
+      </div>
+      <div class="modal-body">
+        <div class="field">
+          <label>Make.com webhook URL</label>
+          <input type="url" id="gm-url" class="mono"
+            style="font-size:12.5px;"
+            placeholder="https://hook.make.com/abc123…"
+            value="${escapeHtml(current)}">
+          <div class="url-status" id="gm-status"></div>
+        </div>
+        ${isHardcoded ? `<p style="font-size:12px;color:var(--text-faint);margin-top:-6px;">Currently using the hardcoded URL from <code>digest.html</code>. Saving here will override it in this browser.</p>` : ''}
+        <p style="font-size:12px;color:var(--text-faint);">
+          To permanently change the URL, edit the <code>WEBHOOK_URL</code> constant near the top of <code>digest.html</code>.
+        </p>
+      </div>
+      <div class="modal-footer">
+        ${localStorage.getItem('mark_digest_webhook') ? `<button class="btn btn-danger" id="gm-clear" style="margin-right:auto;">Clear saved URL</button>` : ''}
+        <button class="btn btn-ghost" id="gm-cancel">Cancel</button>
+        <button class="btn btn-bull" id="gm-save">Save</button>
+      </div>`;
+
+    const overlay = openModal(html);
+
+    // Live status indicator as user types
+    const urlInput = overlay.querySelector('#gm-url');
+    const statusEl = overlay.querySelector('#gm-status');
+    function updateStatus(v){
+      if(!v){ statusEl.textContent = ''; statusEl.className = 'url-status'; return; }
+      if(v.startsWith('https://hook.make.com/') || v.startsWith('https://hook.eu1.make.com/')){
+        statusEl.className = 'url-status ok';
+        statusEl.textContent = '✓ Valid Make.com webhook URL';
+      } else {
+        statusEl.className = 'url-status warn';
+        statusEl.textContent = 'Doesn\'t look like a Make.com URL — double-check it.';
+      }
+    }
+    updateStatus(current);
+    urlInput.addEventListener('input', () => updateStatus(urlInput.value.trim()));
+
+    overlay.querySelector('#gm-x').addEventListener('click', closeModal);
+    overlay.querySelector('#gm-cancel').addEventListener('click', closeModal);
+
+    const clearBtn = overlay.querySelector('#gm-clear');
+    if(clearBtn){
+      clearBtn.addEventListener('click', () => {
+        localStorage.removeItem('mark_digest_webhook');
+        closeModal();
+        checkWebhookWarning();
+        toast('Saved URL cleared — using hardcoded value if set.', 'ok');
+      });
+    }
+
+    overlay.querySelector('#gm-save').addEventListener('click', () => {
+      const url = urlInput.value.trim();
+      if(!url){ toast('Paste a webhook URL first.', 'err'); return; }
+      localStorage.setItem('mark_digest_webhook', url);
+      closeModal();
+      checkWebhookWarning();
+      toast('Webhook URL saved.', 'ok');
+    });
+  });
+
+});
+</script>
+</body>
+</html>
