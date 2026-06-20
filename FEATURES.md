@@ -1,4 +1,4 @@
-# MARK. Trading Journal — Enhanced Features Summary
+# Inspiro® Trading Journal — Enhanced Features Summary
 
 ## Files Created/Modified
 
@@ -49,7 +49,7 @@
    - Generate shareable image of any trade
    - Uses html2canvas library (CDN)
    - Copy as text or download as PNG
-   - Branded with MARK. logo
+   - Branded with Inspiro® logo
 
 7. **Correlation Heatmap**
    - Shows P&L correlation between symbols

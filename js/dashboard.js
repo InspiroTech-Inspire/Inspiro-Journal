@@ -1,5 +1,5 @@
 /* =========================================================
-   MARK. — Trading Journal
+   Inspiro® — Trading Journal
    Dashboard / Journal page logic
    + Tags, Discipline, Memory, Share Card, Correlation, Import
    ========================================================= */
@@ -326,7 +326,7 @@ function renderTradeTable(trades){
           const el = document.getElementById(`share-card-${t.id}`);
           const canvas = await html2canvas(el, { backgroundColor: null, scale: 2 });
           const link = document.createElement('a');
-          link.download = `mark-${t.symbol}-${t.date}.png`;
+          link.download = `inspiro-${t.symbol}-${t.date}.png`;
           link.href = canvas.toDataURL('image/png');
           link.click();
         } else {

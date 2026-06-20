@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-<title>Weekly Digest — MARK.</title>
+<title>Weekly Digest — Inspiro®</title>
 <link rel="icon" href="data:,">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@500;600;700&family=Inter:wght@400;500;600;700&family=JetBrains+Mono:wght@400;500;600&display=swap" rel="stylesheet">
@@ -103,7 +103,7 @@
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
         </button>
-        <div class="digest-logo">M</div>
+        <div class="digest-logo">I</div>
         <h1>Weekly Trading Digest</h1>
         <p>Send a beautiful summary of your week's trading straight to your inbox — instantly, no queue.</p>
         <div class="preview-grid">
@@ -180,7 +180,7 @@
 <script src="js/nav.js"></script>
 <script>
 /* ================================================================
-   MARK. — Weekly Digest (EmailJS edition)
+   Inspiro® — Weekly Digest (EmailJS edition)
    ================================================================
 
    SETUP — paste your three EmailJS values below.
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', () => {
       worst_pnl:     worst ? '-$' + Math.abs(Number(worst.pnl)||0).toFixed(2) : '—',
       // Clean plain-text — stops EmailJS scraping the page
       message: [
-        'MARK. Weekly Trading Digest',
+        'Inspiro® Weekly Trading Digest',
         from + ' to ' + to,
         '',
         'Total Trades:  ' + trades.length,
@@ -305,7 +305,7 @@ document.addEventListener('DOMContentLoaded', () => {
         'Best Trade:    ' + (best  ? (best.symbol  || '-') + '  +$' + Math.abs(Number(best.pnl)||0).toFixed(2)  : '-'),
         'Worst Trade:   ' + (worst ? (worst.symbol || '-') + '  -$' + Math.abs(Number(worst.pnl)||0).toFixed(2) : '-'),
         '',
-        'Sent by MARK. Trading Journal',
+        'Sent by Inspiro® Trading Journal',
       ].join('\n'),
     };
   }
@@ -450,7 +450,7 @@ const EMAIL_HTML_TEMPLATE = `<!DOCTYPE html>
 <head>
 <meta charset="UTF-8"/>
 <meta name="viewport" content="width=device-width,initial-scale=1.0"/>
-<title>MARK. Weekly Digest</title>
+<title>Inspiro® Weekly Digest</title>
 </head>
 <body style="margin:0;padding:0;background:#0D1117;font-family:'Helvetica Neue',Arial,sans-serif;">
 <table width="100%" cellpadding="0" cellspacing="0" style="background:#0D1117;padding:40px 16px;">
@@ -460,8 +460,8 @@ const EMAIL_HTML_TEMPLATE = `<!DOCTYPE html>
       <!-- Header -->
       <tr>
         <td align="center" style="padding-bottom:28px;">
-          <div style="display:inline-block;background:linear-gradient(135deg,#E8B339,#2DD4A7);border-radius:16px;width:56px;height:56px;line-height:56px;text-align:center;font-size:24px;font-weight:700;color:#0A0E13;margin-bottom:12px;">M</div>
-          <div style="font-size:26px;font-weight:700;color:#E8B339;letter-spacing:2px;margin-bottom:4px;">MARK.</div>
+          <div style="display:inline-block;background:linear-gradient(135deg,#E8B339,#2DD4A7);border-radius:16px;width:56px;height:56px;line-height:56px;text-align:center;font-size:24px;font-weight:700;color:#0A0E13;margin-bottom:12px;">I</div>
+          <div style="font-size:26px;font-weight:700;color:#E8B339;letter-spacing:2px;margin-bottom:4px;">Inspiro®</div>
           <div style="font-size:13px;color:#8A96A5;letter-spacing:1px;text-transform:uppercase;">Weekly Trading Digest</div>
           <div style="margin-top:8px;display:inline-block;background:#161B22;border:1px solid #232C38;border-radius:20px;padding:5px 16px;font-size:12px;color:#5B6675;">
             {{week_start}} &mdash; {{week_end}}
@@ -556,7 +556,7 @@ const EMAIL_HTML_TEMPLATE = `<!DOCTYPE html>
       <!-- Footer -->
       <tr>
         <td align="center" style="padding-top:28px;padding-bottom:8px;">
-          <div style="font-size:11px;color:#3A4452;letter-spacing:1px;">Sent by MARK. Trading Journal &mdash; your edge, quantified.</div>
+          <div style="font-size:11px;color:#3A4452;letter-spacing:1px;">Sent by Inspiro® Trading Journal &mdash; your edge, quantified.</div>
         </td>
       </tr>
 
