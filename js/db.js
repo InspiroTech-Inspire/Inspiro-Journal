@@ -1,5 +1,5 @@
 /* =========================================================
-   MARK. — Trading Journal
+   Inspiro® — Trading Journal
    Data layer: localStorage persistence, grading, stats helpers
    + Theme, Sessions, Tags, Discipline, Memory, Correlation
    ========================================================= */
@@ -413,7 +413,7 @@ async function generateShareCard(trade){
   const html = `
     <div class="share-card-preview" id="share-card-${trade.id}">
       <div class="share-card-header">
-        <span class="share-card-logo">MARK.</span>
+        <span class="share-card-logo">Inspiro®</span>
         <span class="pill ${(trade.direction||'Long')==='Long'?'pill-long':'pill-short'}">${trade.direction || '—'}</span>
       </div>
       <div class="share-card-body">
@@ -435,7 +435,7 @@ async function generateShareCard(trade){
           <span class="value" style="color:var(--grade-${trade.grade.toLowerCase()})">${trade.grade}</span>
         </div>` : ''}
       </div>
-      <div class="share-card-footer">${fmtDate(trade.date)} · mark.trade</div>
+      <div class="share-card-footer">${fmtDate(trade.date)} · inspiro.trade</div>
     </div>
   `;
   return html;
@@ -577,7 +577,7 @@ function computeAccountMetrics(acc){
 function exportAllData(){
   const payload = {
     exportedAt: new Date().toISOString(),
-    app: 'MARK. Trading Journal',
+    app: 'Inspiro® Trading Journal',
     version: 1,
     trades: Trades.all(),
     strategies: Strategies.all(),
@@ -588,7 +588,7 @@ function exportAllData(){
   const url = URL.createObjectURL(blob);
   const a = document.createElement('a');
   a.href = url;
-  a.download = `mark-journal-backup-${todayISO()}.json`;
+  a.download = `inspiro-backup-${todayISO()}.json`;
   document.body.appendChild(a); a.click(); a.remove();
   URL.revokeObjectURL(url);
 }

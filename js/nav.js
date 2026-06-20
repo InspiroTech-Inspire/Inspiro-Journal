@@ -1,5 +1,5 @@
 /* =========================================================
-   MARK. — Trading Journal
+   Inspiro® — Trading Journal
    Shared UI: sidebar, ticker, modal, toast, data tools
    ========================================================= */
 
@@ -59,8 +59,8 @@ function renderSidebar(active){
 
   root.innerHTML = `
     <div class="brand">
-      <div class="brand-mark">M</div>
-      <div class="brand-text">MARK.<small>Trade Journal</small></div>
+      <div class="brand-mark">I</div>
+      <div class="brand-text">Inspiro®<small>Trade Journal</small></div>
     </div>
     <nav class="nav">
       ${NAV_ITEMS.map(item => `
@@ -102,7 +102,7 @@ function renderSidebar(active){
         toast('Backup imported.', 'ok');
         setTimeout(() => location.reload(), 600);
       }catch(err){
-        toast('Could not read that file — is it a MARK. backup?', 'err');
+        toast('Could not read that file — is it a Inspiro® backup?', 'err');
       }
     }
     e.target.value = '';

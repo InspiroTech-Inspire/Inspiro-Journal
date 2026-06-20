@@ -1,4 +1,4 @@
-# MARK. — a self-hosted trading journal
+# Inspiro® — a self-hosted trading journal
 
 A static, no-build trading journal you run entirely in your own browser and host for free on GitHub Pages. No backend, no signup, no subscription — your data lives in your browser's local storage on your device.
 
