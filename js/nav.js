@@ -59,7 +59,7 @@ function renderSidebar(active){
 
   root.innerHTML = `
     <div class="brand">
-      <img src="assets/logo.png" alt="Inspiro Logo" style="max-width: 100%; height: auto; border-radius: 8px;">
+      <img src="assets/inspiro.svg" alt="Inspiro Logo" style="max-width: 100%; height: auto;">
     </div>
     <nav class="nav">
       ${NAV_ITEMS.map(item => `

@@ -413,7 +413,7 @@ async function generateShareCard(trade){
   const html = `
     <div class="share-card-preview" id="share-card-${trade.id}">
       <div class="share-card-header">
-        <span class="share-card-logo">Inspiro®</span>
+        <img src="assets/inspiro.svg" alt="Inspiro Logo" style="height: 32px;">
         <span class="pill ${(trade.direction||'Long')==='Long'?'pill-long':'pill-short'}">${trade.direction || '—'}</span>
       </div>
       <div class="share-card-body">

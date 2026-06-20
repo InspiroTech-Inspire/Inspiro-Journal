@@ -18,13 +18,6 @@
     background: var(--surface); border: 1px solid var(--border); border-radius: var(--radius-lg);
     position: relative;
   }
-  .digest-logo{
-    width: 48px; height: 48px; border-radius: 13px;
-    background: linear-gradient(135deg, var(--gold), var(--bull));
-    display: flex; align-items: center; justify-content: center;
-    font-family: var(--font-display); font-weight: 700; color: #0A0E13; font-size: 20px;
-    margin: 0 auto 12px;
-  }
   .digest-hero h1{ font-size: 20px; margin-bottom: 4px; }
   .digest-hero p{ color: var(--text-muted); font-size: 13px; line-height: 1.6; }
 
@@ -103,7 +96,7 @@
             <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1-2.83 2.83l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-4 0v-.09A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06-.06a2 2 0 0 1-2.83-2.83l.06-.06A1.65 1.65 0 0 0 4.68 15a1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1 0-4h.09A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 2.83-2.83l.06.06A1.65 1.65 0 0 0 9 4.68a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 4 0v.09a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 2.83l-.06.06A1.65 1.65 0 0 0 19.4 9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 0 4h-.09a1.65 1.65 0 0 0-1.51 1z"/>
           </svg>
         </button>
-        <div class="digest-logo">I</div>
+        <img src="assets/inspiro.svg" alt="Inspiro Logo" style="width: 48px; height: 48px; margin-bottom: 12px;">
         <h1>Weekly Trading Digest</h1>
         <p>Send a beautiful summary of your week's trading straight to your inbox — instantly, no queue.</p>
         <div class="preview-grid">
@@ -461,7 +454,7 @@ const EMAIL_HTML_TEMPLATE = `<!DOCTYPE html>
       <!-- Header -->
       <tr>
         <td align="center" style="padding-bottom:28px;">
-          <div style="display:inline-block;background:linear-gradient(135deg,#E8B339,#2DD4A7);border-radius:16px;width:56px;height:56px;line-height:56px;text-align:center;font-size:24px;font-weight:700;color:#0A0E13;margin-bottom:12px;">I</div>
+          <img src="assets/inspiro.svg" alt="Inspiro Logo" style="width: 56px; height: 56px; margin-bottom: 12px;">
           <div style="font-size:26px;font-weight:700;color:#E8B339;letter-spacing:2px;margin-bottom:4px;">Inspiro®</div>
           <div style="font-size:13px;color:#8A96A5;letter-spacing:1px;text-transform:uppercase;">Weekly Trading Digest</div>
           <div style="margin-top:8px;display:inline-block;background:#161B22;border:1px solid #232C38;border-radius:20px;padding:5px 16px;font-size:12px;color:#5B6675;">
