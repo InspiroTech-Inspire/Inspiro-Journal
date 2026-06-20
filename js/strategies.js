@@ -52,7 +52,7 @@ function renderStrategyGrid(){
   if(!strategies.length){
     grid.innerHTML = `<div class="card empty-state" style="grid-column:1/-1;">
       <div class="e-icon">🧭</div>
-      No strategies yet. Create one to define entry rules and get automatic A–D grading on every trade.
+      <span class="typing-text">No strategies yet</span>. Create one to define entry rules and get automatic A–D grading on every trade.
     </div>`;
     return;
   }

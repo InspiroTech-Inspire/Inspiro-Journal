@@ -27,37 +27,49 @@
 
     <div class="ticker" id="ticker-mount"></div>
 
-    <div class="stat-grid" id="stat-grid"></div>
+    <div class="grid-2">
+      <div>
+        <div class="stat-grid" id="stat-grid"></div>
 
+        <div id="tag-filter-mount"></div>
 
-    <div class="card">
-      <div class="page-head" style="margin-bottom:16px;">
-        <div>
-          <h3 class="card-title">Trade log</h3>
-          <div class="card-sub" id="log-count">0 trades</div>
-        </div>
-        <div class="filter-bar" style="margin:0;">
-          <select id="filter-strategy"><option value="">All strategies</option></select>
-          <select id="filter-grade"><option value="">All grades</option><option value="A">A setups</option><option value="B">B setups</option><option value="C">C setups</option><option value="D">D setups</option></select>
-          <select id="filter-outcome"><option value="">All outcomes</option><option value="Win">Win</option><option value="Loss">Loss</option><option value="Breakeven">Breakeven</option></select>
+        <div class="card">
+          <div class="page-head" style="margin-bottom:16px;">
+            <div>
+              <h3 class="card-title">Trade log</h3>
+              <div class="card-sub" id="log-count">0 trades</div>
+            </div>
+            <div class="filter-bar" style="margin:0;">
+              <select id="filter-strategy"><option value="">All strategies</option></select>
+              <select id="filter-grade"><option value="">All grades</option><option value="A">A setups</option><option value="B">B setups</option><option value="C">C setups</option><option value="D">D setups</option></select>
+              <select id="filter-outcome"><option value="">All outcomes</option><option value="Win">Win</option><option value="Loss">Loss</option><option value="Breakeven">Breakeven</option></select>
+            </div>
+          </div>
+          <div class="table-wrap">
+            <table class="tj">
+              <thead>
+                <tr>
+                  <th>Date</th><th>Symbol</th><th>Dir</th><th>Strategy</th><th>Grade</th><th>Outcome</th><th>P&amp;L</th><th>Proof</th><th></th>
+                </tr>
+              </thead>
+              <tbody id="trades-tbody"></tbody>
+            </table>
+          </div>
         </div>
       </div>
-      <div class="table-wrap">
-        <table class="tj">
-          <thead>
-            <tr>
-              <th>Date</th><th>Symbol</th><th>Dir</th><th>Strategy</th><th>Grade</th><th>Outcome</th><th>P&amp;L</th><th>Proof</th><th></th>
-            </tr>
-          </thead>
-          <tbody id="trades-tbody"></tbody>
-        </table>
-      </div>
+
+      <aside>
+        <div id="memory-mount"></div>
+        <div id="discipline-mount"></div>
+        <div id="correlation-mount"></div>
+      </aside>
     </div>
   </main>
 </div>
 
 <div id="toast-wrap" class="toast-wrap"></div>
 
+<script src="https://html2canvas.hertzen.com/dist/html2canvas.min.js"></script>
 <script src="js/db.js"></script>
 <script src="js/nav.js"></script>
 <script src="js/dashboard.js"></script>
