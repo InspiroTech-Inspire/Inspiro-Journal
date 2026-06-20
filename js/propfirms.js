@@ -28,7 +28,7 @@ function renderAccountGrid(){
   if(!accounts.length){
     grid.innerHTML = `<div class="card empty-state" style="grid-column:1/-1;">
       <div class="e-icon">🛡️</div>
-      No prop firm accounts yet. Add one to track drawdown limits and phase targets against your linked trades.
+      <span class="typing-text">No prop firm accounts yet</span>. Add one to track drawdown limits and phase targets against your linked trades.
     </div>`;
     return;
   }

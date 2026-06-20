@@ -414,16 +414,16 @@ async function generateShareCard(trade){
     <div class="share-card-preview" id="share-card-${trade.id}">
       <div class="share-card-header">
         <span class="share-card-logo">MARK.</span>
-        <span class="pill ${trade.direction==='Long'?'pill-long':'pill-short'}">${trade.direction}</span>
+        <span class="pill ${(trade.direction||'Long')==='Long'?'pill-long':'pill-short'}">${trade.direction || '—'}</span>
       </div>
       <div class="share-card-body">
         <div class="share-card-stat">
           <span class="label">Symbol</span>
-          <span class="value">${escapeHtml(trade.symbol)}</span>
+          <span class="value">${escapeHtml(trade.symbol || '—')}</span>
         </div>
         <div class="share-card-stat">
           <span class="label">P&L</span>
-          <span class="value ${trade.pnl>=0?'text-bull':'text-bear'}">${moneySigned(trade.pnl)}</span>
+          <span class="value ${(trade.pnl||0)>=0?'text-bull':'text-bear'}">${moneySigned(trade.pnl || 0)}</span>
         </div>
         <div class="share-card-stat">
           <span class="label">Strategy</span>
